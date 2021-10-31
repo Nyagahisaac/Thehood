@@ -7,7 +7,8 @@ from django.contrib.auth.models import User
 class Admin(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-   
+    def __str__(self):
+        return self.user
 
 class Neighbourhood(models.Model):
     name = models.CharField(max_length=100)
