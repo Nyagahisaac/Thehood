@@ -7,14 +7,20 @@ from django.contrib.auth.models import User
 class Admin(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
 
-    def __str__(self):
-        return self.user
+   
 
 class Neighbourhood(models.Model):
     name = models.CharField(max_length=100)
     location = models.CharField(max_length=100)
-    no_occupant = HTMLField()
+    no_occupant = HTMLField(blank=True)
     admin = models.ForeignKey(Admin,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.name
+
+    def save_neighbour(self):
+        self.save
+
 
 class User(models.Model):
     name = models.CharField(max_length=100)
