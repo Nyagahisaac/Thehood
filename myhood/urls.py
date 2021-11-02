@@ -21,5 +21,6 @@ from django.conf.urls import url
 urlpatterns = [
     
     path('admin/', admin.site.urls),
-    # path('',include('gossip.urls')),
+    path('',include('gossip.urls')),
+    # path('accounts/', include('registration.backends.simple.urls')),
 ]

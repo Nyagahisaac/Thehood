@@ -37,9 +37,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    # 'gossip.apps.GossipConfig',
-    'gossip',
     'bootstrap4',
+    'gossip.apps.GossipConfig',
+    # 'gossip',
 ]
 
 MIDDLEWARE = [
