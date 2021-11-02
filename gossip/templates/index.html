@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+
+<div class="container">
+    <div class="text-center">
+        <h1>Welcome to {{ neighbourhood }}</h1>
+    </div>
+
+    {% if posts %}
+
+    <div class="row">
+        {% for post in posts %}
+
+        <div class="col-md-6">
+            <div class="card">
+                <div class="card-body">
+                    <div class="card-title">
+                        <h2>{{ post.title }}</h2>
+                    </div>
+
+                    <div class="card-text">
+                        <p>{{ post.content }}</p>
+                    </div>
+
+                    <a href="{% url 'post' post.id %}" class="btn btn-secondary"> More </a>
+                </div>
+            </div>
+        </div>
+
+        {% endfor %}
+
+    {% else %}
+
+    <h2 class="text-center">Whoops. There are no posts. Check back another time.</h2>
+
+    {% endif %}
+
+    <a href="{% url 'new_post' %}" class="btn btn-primary">Post something</a>
+    </div>
+
+{% endblock content %}
