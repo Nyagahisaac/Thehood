@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+{{block.super}}
+<style>
+  h2{
+    text-align: center;
+  }
+</style>
+    <div class="container">
+      {% for post in post%}
+        <div class="card">
+            <div class="card-body">
+                <h2 class="card-title">{{post.title}}</h2>
+                <p class="card-text">{{post.content}}</p>
+                <p class="card-text">Posted by: <a href="">{{post.user}}</a> on <strong>{{post.pub_date|date}}</strong></p>
+            </div>
+        </div>
+      {% endfor %}
+      <a href="{% url 'new_post' %}" class="btn btn-primary">Add a Post</a>
+    </div>
+{% endblock content %}
