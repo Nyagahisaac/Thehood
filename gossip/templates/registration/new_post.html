@@ -1,0 +1,45 @@
+{% extends 'base.html' %}
+{% load bootstrap4 %}
+{% block content %}
+    <div class="container">
+
+        {% if businesses %}
+
+        <div class="card card-body my-5">
+            <table class="table">
+                <thead class="black white-text">
+                    <tr class="font-weight-bold">
+                        <th class="th-sm">#</th>
+                        <th class="th-sm">Business Name</th>
+                        <th class="th-sm">Business Description</th>
+                        <th class="th-sm">Business Owner</th>
+                        <th class="th-sm">Email</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    {% for business in businesses %}
+                    <tr>
+                        <th scope="row"></th>
+                        <td>{{business.name}}</td>
+                        <td>{{business.description}}</td>
+                        <td>{{business.owner}}</td>
+                        <td>{{business.email}}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+
+            </table>
+        </div>
+
+        {% else %}
+
+        <h1 class="text-center">No business available.</h1>
+
+        <a href="{% url 'new_business' %}" class="btn btn-primary">Add a business</a>
+
+        {% endif %}
+
+    </div>
+
+{% endblock content %}
