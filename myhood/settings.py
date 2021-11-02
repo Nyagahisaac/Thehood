@@ -37,7 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'gossip.apps.GossipConfig',
+    # 'gossip.apps.GossipConfig',
+    'gossip',
     'bootstrap4',
 ]
 
@@ -78,7 +79,7 @@ WSGI_APPLICATION = 'myhood.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'hoody',
+        'NAME': 'hood',
         'USER': 'isaac',
     'PASSWORD':'2face',
     }

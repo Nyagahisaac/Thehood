@@ -1,1 +1,71 @@
-<h1>My hood gossip app</h1>
+{% extends 'base.html' %}
+{% block content %}
+{{block.super}}
+<style>
+    img{
+        opacity:0.8;
+    }
+    img:hover{
+        opacity:1.0;
+    }
+    .card:hover{
+        box-shadow:2px 2px 5px #504658;
+    }
+   
+    .text{
+        text-align: center;
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        color: white;
+    }
+    p.p{
+        margin-left: 0% important!;
+    }
+    hr{
+        color:white;
+    }
+</style>
+<body class="body" style="background-image:url('https://i.pinimg.com/originals/b9/bf/6b/b9bf6b99470fe5ed5b35857a816af55e.jpg')">
+    <div class="lp">
+    <div class="overlay">
+   <div class="text">
+        <hr>
+    </div>
+    </div>
+</div>
+<div class="container-fluid mt-4">
+    <div class="row">
+        {% if hoods %}
+        {% for hood in hoods %}
+        <div class="col-md-4">
+            <div class="card card-default">
+                <div class="card-heading inline">
+                    <div class="row">
+                    </div>
+                </div>
+                <div class="card-title">
+                    <div class=" view overlay zoom" style="height: 245px; padding:2%;">
+                        <a href="/businesses">
+                            <img src="{{hood.image.url}}" class="img-responsive" style="height: 250px;" width="100%" alt="project lp">
+                        </a>
+                    </div>
+                </div>
+                <div class="card-footer">
+                    <h5>{{hood.neighbourhood}}</h5>
+                    <h5>{{hood.occupants}} occupants</h5>
+                </div>
+            </div>
+            <br>
+        </div>
+        {% endfor %}
+        
+        {% endif %}
+    </div>
+</div>
+</body>
+{% endblock %}
+
+
+

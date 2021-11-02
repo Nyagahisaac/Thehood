@@ -1,62 +1,82 @@
 from django.db import models
-from django.db.models.fields import IntegerField, TextField
-from tinymce.models import HTMLField
 from django.contrib.auth.models import User
-
+from django.dispatch import receiver
+from django.db.models.signals import post_save
 
 # Create your models here.
 
-class Profile(models.Model):
-    '''
-    this is a class that defines the profile structure of our user
-    '''
-    user = models.OneToOneField(User,on_delete = models.CASCADE)    
-    profile_pic = models.ImageField(upload_to= 'images/', default= 'default.jpg')
-    bio = HTMLField()
-    neighbourhood = models.CharField(max_length=200)
+class Neighbourhood(models.Model):
+    neighbourhood = models.CharField(max_length=100)
+    image = models.ImageField(upload_to='media/',blank=True)
+    occupants = models.IntegerField(null=True, default=0)
 
-    
     def __str__(self):
-        return self.user.username
+        return self.neighbourhood
 
-        return self.user.username
+    def save_neighbourhood(self):
+        self.save()
+
+    @classmethod
+    def get_all_hoods(cls):
+        hoods = Neighbourhood.objects.all()
+        return hoods
+
+    @classmethod
+    def delete_neighbourhood(cls,neighbourhood):
+        cls.objects.filter(neighbourhood=neighbourhood).delete()
+
+class Profile(models.Model):
+  profile_pic = models.ImageField(default='../static/images/default.jpeg',upload_to='media/')
+  neighbourhood = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE,null=True)
+  bio = models.TextField()
+  user = models.OneToOneField(User,on_delete = models.CASCADE)
+  neighbourhood = models.CharField(max_length=30, null=True)
+  
+  @receiver(post_save , sender = User)
+  def create_profile(instance,sender,created,**kwargs):
+    if created:
+      Profile.objects.create(user = instance)
+
+  @receiver(post_save,sender = User)
+  def save_profile(sender,instance,**kwargs):
+    instance.profile.save()
+
+  def __str__(self):
+    return self.user
 
 
 class Business(models.Model):
-    '''
-    this class gives a blueprint how our bussinesses will be made
-    '''
-    posted_by = models.ForeignKey(User,on_delete = models.CASCADE)
-    neighbourhood = models.CharField(max_length=100)
+    name =models.CharField(max_length=100)
+    description = models.TextField()
+    neighbourhood = models.ForeignKey(Neighbourhood,on_delete=models.CASCADE,null=True)
+    owner = models.ForeignKey(User,on_delete=models.CASCADE)
     email = models.EmailField()
-    name = models.CharField(max_length=250)
-    description = TextField()
-    image =  models.ImageField(upload_to= 'post/', default= 'default.jpg')
-    
+    address =models.CharField(max_length=100)
+    contact = models.IntegerField()
+
     def __str__(self):
         return self.name
 
+    @classmethod
+    def search_business(cls, search_term):
+        business = cls.objects.filter(name__icontains=search_term)
+        return business
+        
 class Post(models.Model):
-    '''
-    this creates the blueprint on which the post will rely on
-    '''
     title = models.CharField(max_length=100)
-    image = models.ImageField(upload_to= 'post/',blank=True)
-    description = TextField()
-    posted_by = models.ForeignKey(User,on_delete= models.CASCADE)
-    posted_on = models.DateTimeField(auto_now_add=True)
-    neighbourhood = models.CharField(max_length= 100)
+    content = models.TextField()
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    pub_date = models.DateTimeField(auto_now_add=True, null=True)
+    
     
     def __str__(self):
+        
         return self.title
 
-class Neighbourhood(models.Model):
-    '''
-    this is used to create the neighbourhood information
-    '''
-    name = models.CharField(max_length=100)
-    location = models.CharField(max_length=100)
-    image = models.ImageField(upload_to= 'post/',blank=True)
-    
-    def __str__(self):
-        return self.name
+    @classmethod
+    def get_all_posts(cls):
+        post = Post.objects.all()
+        return post 
+
+  
+
