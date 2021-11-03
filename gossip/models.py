@@ -78,5 +78,29 @@ class Post(models.Model):
         post = Post.objects.all()
         return post 
 
-  
+   
+class Police(models.Model):
+    '''
+    this describes the information that will be collected about the police stations
+    '''
+    name = models.CharField(max_length=250)
+    email = models.EmailField()
+    phone = models.IntegerField()
+    neighbourhood = models.CharField(max_length=250)
+    image =  models.ImageField(upload_to= 'post/', default= 'default.jpg')
+    
+    def __str__(self):
+        return self.name
 
+class Health(models.Model):
+    '''
+    this is a class blueprint or skeleton of how our health sectors will be stored
+    '''
+    neighbourhood = models.CharField(max_length=250)
+    email =  models.EmailField()
+    phone = models.IntegerField()
+    name = models.CharField(max_length=250)
+    image = models.ImageField(upload_to= 'post/',blank=True)
+    
+    def __str__(self):
+        return self.name
