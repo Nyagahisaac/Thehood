@@ -1,10 +1,10 @@
 # THE HOOD
 
 
-Hood App[https://github.com/Nyagah/Thehood.git]
+[Hood App](https://github.com/Nyagah/Thehood.git)
 This project was generated with [Python](https://www.python.org/) version 3.8.0 <br>
 
-[live link]()
+[live link](https://thehoodmtaa.herokuapp.com/)
 
 ## Author: 
 Nyagah Isaac
