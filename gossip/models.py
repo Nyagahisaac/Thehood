@@ -7,7 +7,7 @@ from django.db.models.signals import post_save
 
 class Neighbourhood(models.Model):
     neighbourhood = models.CharField(max_length=100)
-    image = models.ImageField(upload_to='media/',blank=True)
+    image = models.ImageField(upload_to='photo/',blank=True)
     occupants = models.IntegerField(null=True, default=0)
 
     def __str__(self):
